@@ -1,3 +1,5 @@
+// Configurations and environment variables
+
 // We reuse this import in order to have access to the `body` property in requests
 const express = require("express");
 
@@ -36,3 +38,22 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 };
+
+PORT=5005
+ORIGIN=http://localhost:3000
+TOKEN_SECRET=y0uRt0k3N$eCr3T
+SESSION_SECRET='Pilias'
+MONGO_URI="mongodb+srv://andrepinto:YGa6d8RLPU3BTk7F@cluster0.u1ktoop.mongodb.net/"
+CLOUDINARY_NAME='dqczjilmn' 
+CLOUDINARY_KEY='424963154419575' 
+CLOUDINARY_SECRET='qY3DINYistZ-YZOztOL_3_w_QO4' 
+
+
+export const config = {
+  tknSecret: process.env.TOKEN_SECRET,
+  seshSecret: process.env.SESSION_SECRET,
+  dbURI: process.env.MONGO_URI,
+  cloudName: process.env.CLOUDINARY_NAME,
+  cloudKey: process.env.CLOUDINARY_KEY,
+  cloudSecret: process.env.CLOUDINARY_SECRET,
+}

@@ -1,3 +1,4 @@
+import { config } from "../config/index.js";
 const express = require("express");
 const router = express.Router();
 
@@ -18,7 +19,19 @@ const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
-  const { email, password, username, first_Name, surname, date_Of_Birth , favourite_On_Nature, favouriteSeason, profile_Image, continent, country } = req.body;
+  const {
+    email,
+    password,
+    username,
+    first_Name,
+    surname,
+    date_Of_Birth,
+    favourite_On_Nature,
+    favouriteSeason,
+    profile_Image,
+    continent,
+    country,
+  } = req.body;
 
   // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || username === "") {
@@ -58,12 +71,24 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, username, first_Name, surname, date_Of_Birth , favourite_On_Nature, favouriteSeason, profile_Image, continent, country });
+      return User.create({
+        email,
+        password: hashedPassword,
+        username,
+        first_Name,
+        surname,
+        date_Of_Birth,
+        favourite_On_Nature,
+        favouriteSeason,
+        profile_Image,
+        continent,
+        country,
+      });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
-      const { _id, } = createdUser;
+      const { _id } = createdUser;
 
       // Create a new object that doesn't expose the password
       const user = { email, username, _id };
@@ -104,7 +129,7 @@ router.post("/login", (req, res, next) => {
         const payload = { _id, email, name };
 
         // Create a JSON Web Token and sign it
-        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+        const authToken = jwt.sign(payload, config.tknSecret, {
           algorithm: "HS256",
           expiresIn: "6h",
         });

@@ -1,8 +1,9 @@
+import { config } from "../config/index.js";
 const { expressjwt: jwt } = require("express-jwt");
 
 // Instantiate the JWT token validation middleware
 const isAuthenticated = jwt({
-  secret: process.env.TOKEN_SECRET,
+  secret: config.tknSecret,
   algorithms: ["HS256"],
   requestProperty: "payload",
   getToken: getTokenFromHeaders,
